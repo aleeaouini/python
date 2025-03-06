@@ -1,0 +1,16 @@
+<div>
+  <h2>Liste des étudiants</h2>
+  <ul>
+    <li *ngFor="let student of students">
+      {{ student.name }} ({{ student.age }} ans) - {{ student.grade }}
+      <button (click)="deleteStudent(student.id)">Supprimer</button>
+    </li>
+  </ul>
+  <div>
+    <h3>Ajouter un étudiant</h3>
+    <input [(ngModel)]="newStudent.name" placeholder="Nom" />
+    <input [(ngModel)]="newStudent.age" placeholder="Âge" type="number" />
+    <input [(ngModel)]="newStudent.grade" placeholder="Niveau" />
+    <button (click)="addStudent()">Ajouter</button>
+  </div>
+</div>
