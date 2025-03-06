@@ -1,16 +1,29 @@
 <div>
   <h2>Liste des étudiants</h2>
-  <ul>
-    <li *ngFor="let student of students">
+  <mat-list>
+    <mat-list-item *ngFor="let student of students">
       {{ student.name }} ({{ student.age }} ans) - {{ student.grade }}
-      <button (click)="deleteStudent(student.id)">Supprimer</button>
-    </li>
-  </ul>
+      <button mat-button (click)="deleteStudent(student.id)">Supprimer</button>
+    </mat-list-item>
+  </mat-list>
+
   <div>
     <h3>Ajouter un étudiant</h3>
-    <input [(ngModel)]="newStudent.name" placeholder="Nom" />
-    <input [(ngModel)]="newStudent.age" placeholder="Âge" type="number" />
-    <input [(ngModel)]="newStudent.grade" placeholder="Niveau" />
-    <button (click)="addStudent()">Ajouter</button>
+    <mat-form-field appearance="fill">
+      <mat-label>Nom</mat-label>
+      <input matInput [(ngModel)]="newStudent.name" placeholder="Nom" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Âge</mat-label>
+      <input matInput [(ngModel)]="newStudent.age" placeholder="Âge" type="number" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Niveau</mat-label>
+      <input matInput [(ngModel)]="newStudent.grade" placeholder="Niveau" />
+    </mat-form-field>
+
+    <button mat-raised-button (click)="addStudent()">Ajouter</button>
   </div>
 </div>

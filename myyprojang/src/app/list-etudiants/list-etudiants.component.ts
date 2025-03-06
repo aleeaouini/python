@@ -2,6 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
 import { StudentService } from '../student-service.service';
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 interface Student {
   id: number;
   name: string;
@@ -11,7 +17,13 @@ interface Student {
 
 @Component({
   selector: 'app-list-etudiants',
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule,
+    MatButtonModule,
+    MatInputModule,
+    MatListModule,
+    MatFormFieldModule,
+    MatIconModule
+  ],
   templateUrl: './list-etudiants.component.html',
   styleUrl: './list-etudiants.component.scss'
 })

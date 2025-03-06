@@ -5,9 +5,8 @@ app = FastAPI()
 
 # Liste d'étudiants (exemples)
 students = [
-    {"id": 1, "name": "John", "age": 21, "grade": "A"},
-    {"id": 2, "name": "Jane", "age": 22, "grade": "B"},
-    {"id": 3, "name": "Jack", "age": 23, "grade": "C"}
+    {"id": 1, "name": "alee", "age": 20, "grade": "2"},
+    
 ]
 
 # Ajouter CORS middleware pour permettre l'accès depuis le frontend Angular
