@@ -1,0 +1,173 @@
+<div class="admin-container">
+  <header class="header">
+    <h1>Administration des étudiants</h1>
+  </header>
+
+  <!-- Message de chargement -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Chargement en cours...</p>
+  </div>
+
+  <!-- Messages d'erreur et de succès -->
+  <div *ngIf="errorMessage" class="alert error-alert">
+    <span class="alert-icon">⚠️</span>
+    <span>{{ errorMessage }}</span>
+    <button class="close-btn" (click)="errorMessage = ''">×</button>
+  </div>
+
+  <div *ngIf="successMessage" class="alert success-alert">
+    <span class="alert-icon">✓</span>
+    <span>{{ successMessage }}</span>
+    <button class="close-btn" (click)="successMessage = ''">×</button>
+  </div>
+
+  <div class="dashboard-container">
+    <!-- Liste des étudiants -->
+    <div class="student-list-container">
+      <h2>Liste des étudiants</h2>
+      
+      <div *ngIf="students.length === 0 && !isLoading" class="empty-state">
+        <p>Aucun étudiant n'est encore enregistré.</p>
+      </div>
+      
+      <table *ngIf="students.length > 0" class="student-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Âge</th>
+            <th>Niveau</th>
+            <th>Département</th>
+            <th>Formation</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of students">
+            <td>{{ student.id }}</td>
+            <td>{{ student.name }}</td>
+            <td>{{ student.age }}</td>
+            <td>{{ student.grade }}</td>
+            <td>{{ student.department }}</td>
+            <td>{{ student.formation }}</td>
+            <td>
+              <button class="delete-btn" (click)="deleteStudent(student.id)">Supprimer</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Formulaire pour ajouter un étudiant -->
+    <div class="add-student-container">
+      <h2>Ajouter un étudiant</h2>
+      <form (submit)="$event.preventDefault(); addStudent()">
+        <div class="form-group">
+          <label for="name">Nom complet</label>
+          <input 
+            id="name" 
+            type="text" 
+            [(ngModel)]="newStudent.name" 
+            name="name"
+            placeholder="Entrez le nom complet"
+            required
+          />
+        </div>
+        
+        <div class="form-group">
+          <label for="age">Âge</label>
+          <input 
+            id="age" 
+            type="number" 
+            [(ngModel)]="newStudent.age" 
+            name="age"
+            placeholder="Entrez l'âge"
+            min="16"
+            required
+          />
+        </div>
+        
+        <div class="form-group">
+          <label for="grade">Niveau d'études</label>
+          <input 
+            id="grade" 
+            type="text" 
+            [(ngModel)]="newStudent.grade" 
+            name="grade"
+            placeholder="Ex: Licence, Master..."
+            required
+          />
+        </div>
+        
+        <div class="form-group">
+          <label for="department">Département</label>
+          <input 
+            id="department" 
+            type="text" 
+            [(ngModel)]="newStudent.department" 
+            name="department"
+            placeholder="Entrez le département"
+            list="departments-list"
+            required
+          />
+          <datalist id="departments-list">
+            <option *ngFor="let dept of departments" [value]="dept"></option>
+          </datalist>
+        </div>
+        
+        <div class="form-group">
+          <label for="formation">Formation</label>
+          <input 
+            id="formation" 
+            type="text" 
+            [(ngModel)]="newStudent.formation" 
+            name="formation"
+            placeholder="Entrez la formation"
+            list="formations-list"
+            required
+          />
+          <datalist id="formations-list">
+            <option *ngFor="let form of formations" [value]="form"></option>
+          </datalist>
+        </div>
+        
+        <button type="submit" class="add-btn" [disabled]="isLoading">
+          {{ isLoading ? 'Ajout en cours...' : 'Ajouter l\'étudiant' }}
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Section Statistiques -->
+  <div *ngIf="students.length > 0" class="stats-container">
+    <h2>Statistiques des étudiants</h2>
+    
+    <div class="stats-grid">
+      <div class="stats-card">
+        <h3>Nombre total d'étudiants</h3>
+        <div class="stats-number">{{ students.length }}</div>
+      </div>
+      
+      <div class="stats-card" *ngIf="formations.length > 0">
+        <h3>Étudiants par formation</h3>
+        <ul class="stats-list">
+          <li *ngFor="let formation of formations">
+            <span class="stats-label">{{ formation }}:</span>
+            <span class="stats-value">{{ getStudentsByFormation(formation) }}</span>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="stats-card" *ngIf="departments.length > 0">
+        <h3>Étudiants par département</h3>
+        <ul class="stats-list">
+          <li *ngFor="let department of departments">
+            <span class="stats-label">{{ department }}:</span>
+            <span class="stats-value">{{ getStudentsByDepartment(department) }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
